@@ -54,6 +54,7 @@ Create By: Денис Казанцев & Артем Николаев
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using PasswordCheckLib;
+    using System.Security.AccessControl;
 
     namespace PasswordCheckLibTEST
     {
@@ -187,6 +188,57 @@ Create By: Денис Казанцев & Артем Николаев
             bool actual = PasswordChecker.ValidatePassword(password);
             // Asserts
             Assert.AreEqual(expected, actual);
+            
+        }
+        [TestMethod]
+        public void Sozdayom_prikol ()
+        {
+            string password = "";
+            string lett = "abcdefghijklmnopqrstuvwxyz";
+            string letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string digits = "1234567890";
+            string spec = "#$%^&_";
+            Random rnd = new Random();
+            int konec = rnd.Next(8, 20);
+            while (password.Length <= konec)
+            {
+
+
+                int zxc = rnd.Next(0, 4);
+                if (zxc == 0)
+                {
+                    int z = rnd.Next(lett.Length);
+                    char z1 = (char)('a' + z);
+                    password = password + z1;
+
+                }
+                if (zxc == 1)
+                {
+                    int z = rnd.Next(letter.Length);
+                    char x1 = (char)('A' + z);
+                    password = password + x1;
+
+                }
+                if (zxc == 2)
+                {
+                    int z = rnd.Next(letter.Length);
+                    char c1 = (char)('1' + z);
+                    password = password + c1;
+
+                }
+                if (zxc == 3)
+                {
+                    int z = rnd.Next(letter.Length);
+                    char v1 = (char)('!' + z);
+                    password = password + v1;
+
+                }
+
+            }
+            bool exepted = true;
+            bool actual = PasswordChecker.ValidatePassword(password);
+            Assert.IsTrue(actual);
         }
     }
 }
+
